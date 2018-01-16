@@ -1,0 +1,5 @@
+/db/db.old
+/node_modules/*
+
+tdb.sql
+cconf.json
