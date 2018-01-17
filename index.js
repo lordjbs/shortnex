@@ -25,7 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require("./routes/index.js"));
 app.use('/shorten', require("./routes/shorten.js"));
-app.use('/redirect', require("./routes/redirect.js"));
+//app.use('/redirect', require("./routes/redirect.js"));
+app.use('/handler.js', require("./routes/handlerroute.js"));
 
 app.use(function(req, res, next) {
     const err = new Error('Not Found');

@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
           if(err) {
             res.send(err);
           }else {
-            res.send({success:true, id });
+            res.send({success:true, id, url: req.get('host') });
           }
         });
     } catch(e) {
@@ -27,10 +27,10 @@ router.get('/', function(req, res, next) {
 });
 
 function makeid() {
-    var text = "";
+    var text = "s";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (var i = 0; i < 12; i++)
+    for (var i = 0; i < 5; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;

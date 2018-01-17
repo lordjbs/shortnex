@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 
 router.get('/', function(req, res, next) {
-    const id = req.query.id;
+    const id = req.query;
 
     console.log(id);
     if(!id) {
