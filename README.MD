@@ -1,4 +1,4 @@
-# Shortnex v1.1 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4597ac8f2ec441bc8e7e526408fcf70a)](https://www.codacy.com/app/lordjbs/Shortnex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lordjbs/Shortnex&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/lordjbs/Shortnex.svg?branch=master)](https://travis-ci.org/lordjbs/Shortnex)
+# Shortnex v1.1 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4597ac8f2ec441bc8e7e526408fcf70a)](https://www.codacy.com/app/lordjbs/Shortnex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lordjbs/Shortnex&amp;utm_campaign=Badge_Grade)
 Open Source Shortener, Alpha.
 Made with Express and nedb
 
