@@ -5,8 +5,8 @@ var path = require('path');
 router.get('/', function(req, res, next) {
     if(!isEmptyObject(req.query)) {
         var id = req.query;
+
         id = Object.keys(id)[0];
-        console.log(id);
         if(!id) {
           return res.send({error:"params missing."});
         }

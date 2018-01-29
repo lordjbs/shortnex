@@ -1,8 +1,15 @@
 var Datastore = require('nedb')
 var db;
 
-exports.load = () => {
-   db = new Datastore({ filename: require("../conf.json").db, autoload: true });
+exports.load = (func) => {
+  console.log("Loading Database");
+  try{
+    db = new Datastore({ filename: require("../conf.json").db, autoload: true });
+    func("Success! Database loaded!")
+    exports.db = db;
+  }catch(error) {
+    return func("Cannot load Database. " + error.message);
+  }
 }
 
 exports.insert = function(stuff, func) {

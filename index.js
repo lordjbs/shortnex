@@ -15,18 +15,24 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const config = require("./conf.json");
+const database = require("./db/db.js");
+const startup = require("./lib/ascii.js");
 
 const app = express();
 
+if(config.devLog) {
+    app.use(logger('dev'));
+} else {
+    app.use(logger("default"));
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require("./routes/index.js"));
 app.use('/shorten', require("./routes/shorten.js"));
-//app.use('/redirect', require("./routes/redirect.js"));
-app.use('/handler.js', require("./routes/handlerroute.js"));
+app.use('/jquery.min.js', require("./routes/handlerroute.js"));
 
 app.use(function(req, res, next) {
     const err = new Error('Not Found');
@@ -41,23 +47,11 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     return res.send({error:err.message});
 });
-const port = config.port || 3000;
+
+const port =  process.env.PORT || config.port || 8080;
 
 app.listen(port, function () {
-    var lineReader = require('readline').createInterface({
-        input: require('fs').createReadStream('ascii.txt')
-    });
-
-    lineReader.on('line', function (line) {
-        console.log(line);
-    });
-
-    setTimeout(function() {
-        console.log("Listening on Port: " + port)
-        console.log("Starting db...");
-
-        require("./db/db.js").load();
-    }, 1000);
+    startup(port, database);
 });
 
 

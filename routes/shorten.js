@@ -3,16 +3,18 @@ var router = express.Router();
 var path = require('path');
 
 router.get('/', function(req, res, next) {
-    const url = req.query.url;
-    const ip = 0;
+    var url = req.query.url;
     const createdat = new Date();
     if(!url) {
       return res.send({error:"params missing."});
     }
     try{
-      var id = makeid();
+        var id = makeid();
         const db = require("../db/db.js");
-        db.insert({id, url, ip, createdat}, function(err) {
+        if(!url.startsWith("http://") || !url.startsWith("https://")) {
+          url = "http://" + url;
+        }
+        db.insert({id, url, createdat}, function(err) {
           if(err) {
             res.send(err);
           }else {
