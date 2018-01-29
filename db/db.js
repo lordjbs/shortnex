@@ -1,4 +1,4 @@
-var Datastore = require('nedb')
+var Datastore = require('nedb');
 var db;
 
 exports.load = (func) => {
@@ -10,7 +10,7 @@ exports.load = (func) => {
   }catch(error) {
     return func("Cannot load Database. " + error.message);
   }
-}
+};
 
 exports.insert = function(stuff, func) {
   db.insert(stuff, function(err) {
