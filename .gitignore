@@ -2,5 +2,4 @@
 /node_modules/*
 
 tdb.sql
-cconf.json
 tdb.db
