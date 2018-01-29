@@ -1,5 +1,4 @@
 /db/db.old
 /node_modules/*
 
-tdb.sql
-tdb.db
+/test/*
