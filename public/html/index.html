@@ -13,6 +13,26 @@
          src="jquery.min.js"></script>
    </head>
    <body>
+      <style>
+         body {
+         display: flex;
+         min-height: 100vh;
+         flex-direction: column;
+         }
+         main {
+         flex: 1 0 auto;
+         }
+         .middleContent {
+         height: 520px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+         margin-top: 4%;
+         margin-bottom: 4%;
+         }
+      </style>
       <nav class="green lighten-1" role="navigation">
          <div class="nav-wrapper container">
             <a id="logo-container" href="#" class="brand-logo">Shortnex</a>
@@ -25,10 +45,10 @@
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
          </div>
       </nav>
-      <div class="section no-pad-bot" id="index-banner">
+      <div class="section no-pad-bot middleContent" id="index-banner">
          <div class="container">
             <br><br>
-            <h1 class="header center orange-text">Shorten a link.</h1>
+            <h1 class="header center green-text">Shorten a link.</h1>
             <div class="row center">
                <h5 class="header col s12 light" id="u">Shortened URL: </h5>
             </div>
@@ -48,11 +68,20 @@
                      </div>
                   </div>
                </form>
-               <button id="shortenz" class="btn-large waves-effect waves-light blue" onclick="pressed()">Shorten!</button>
+               <button id="shortenz" class="btn-large waves-effect waves-light green" onclick="pressed()">Shorten!</button>
             </div>
             <br><br>
          </div>
       </div>
+      <footer class="page-footer green">
+         <div class="container">
+         </div>
+         <div class="footer-copyright">
+            <div class="container">
+               Shortnex | Made with <3 by lordjbs.
+            </div>
+         </div>
+      </footer>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
    </body>
 </html>

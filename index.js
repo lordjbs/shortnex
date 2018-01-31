@@ -33,7 +33,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function(req,res,next) {
-    console.log("req!!");
     ratelimit.request(req,res,next);
 });
 
