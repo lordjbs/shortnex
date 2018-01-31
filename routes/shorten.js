@@ -11,9 +11,11 @@ router.get('/', function(req, res, next) {
     try{
         var id = makeid();
         const db = require("../db/db.js");
-        if(!url.startsWith("http://") || !url.startsWith("https://")) {
+
+        if(!url.startsWith("http://") && !url.startsWith("https://")) {
           url = "http://" + url;
         }
+
         db.insert({id, url, createdat}, function(err) {
           if(err) {
             res.send(err);

@@ -11,7 +11,8 @@
     "multer": "^1.3.0",
     "nedb": "^1.8.0",
     "path": "^0.12.7",
-    "snekfetch": "^3.6.1"
+    "snekfetch": "^3.6.1",
+    "vhost": "^3.0.2"
   },
   "devDependencies": {},
   "scripts": {
