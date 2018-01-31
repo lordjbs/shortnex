@@ -17,6 +17,7 @@ const bodyParser = require("body-parser");
 const config = require("./conf.json");
 const database = require("./db/db.js");
 const startup = require("./lib/ascii.js");
+const ratelimit = require("./lib/ratelimit.js");
 
 const app = express();
 
@@ -26,9 +27,15 @@ if(config.devLog) {
     app.use(logger("default"));
 }
 
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(function(req,res,next) {
+    console.log("req!!");
+    ratelimit.request(req,res,next);
+});
 
 app.use("/", require("./routes/index.js"));
 app.use("/shorten", require("./routes/shorten.js"));
@@ -51,6 +58,7 @@ app.use(function(err, req, res, next) {
 const port =  process.env.PORT || config.port || 8080;
 
 app.listen(port, function () {
+    ratelimit.start();
     startup(port, database);
 });
 
