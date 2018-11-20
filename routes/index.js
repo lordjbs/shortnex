@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+const utils = require("../lib/util.js");
 
 router.get('/', function(req, res, next) {
-    if(!isEmptyObject(req.query)) {
+    if(!utils.isEmpty(req.query)) {
         var id = req.query;
 
         id = Object.keys(id)[0];
@@ -17,7 +18,7 @@ router.get('/', function(req, res, next) {
                 return res.send({err});
             }
           var u;
-          if(!isEmptyObject(docs)) {
+          if(!utils.isEmpty(docs)) {
               u = docs[0].url;
             }else {
                 return res.send({error: "Cannot find in db."});
@@ -39,9 +40,6 @@ router.get('/', function(req, res, next) {
     }
 });
 
-function isEmptyObject(obj) {
-    return !Object.keys(obj).length;
-  }
   
 
 module.exports = router;

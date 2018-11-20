@@ -5,7 +5,7 @@
  *  ___) | | | | (_) | |  | |_| | | |  __/>  <
  * |____/|_| |_|\___/|_|   \__|_| |_|\___/_/\_\
  *
- * Shortnex v1.0
+ * Shortnex v2.0beta
  * @author lordjbs
  * @requires nodejs9
 */
@@ -16,8 +16,9 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const config = require("./conf.json");
 const database = require("./db/db.js");
-const startup = require("./lib/ascii.js");
+const startup = require("./lib/startup.js");
 const ratelimit = require("./lib/ratelimit.js");
+const userdatabase = require("./db/userdb.js");
 
 const app = express();
 
@@ -27,18 +28,20 @@ if(config.devLog) {
     app.use(logger("default"));
 }
 
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(function(req,res,next) {
-    ratelimit.request(req,res,next);
-});
+app.use(function(req,res,next) {ratelimit.request(req,res,next);});
 
 app.use("/", require("./routes/index.js"));
+app.use("/user/create", require("./routes/user/create.js"));
 app.use("/shorten", require("./routes/shorten.js"));
-app.use("/jquery.min.js", require("./routes/handlerroute.js"));
+app.use("/check/tokensystem", require("./routes/tokenactive.js"));
+app.use("/jquery.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/jquery.min.js'));});
+app.use("/requesthandler.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/requesthandler.js'));});
+app.use("/js.cookie-2.2.0.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/js.cookie-2.2.0.min.js'));});
+
 
 app.use(function(req, res, next) {
     const err = new Error("Not Found");
@@ -58,7 +61,7 @@ const port =  process.env.PORT || config.port || 8080;
 
 app.listen(port, function () {
     ratelimit.start();
-    startup(port, database);
+    startup(port, database, userdatabase);
 });
 
 
