@@ -44,7 +44,7 @@ function addTokenbar(boolean) {
     document.getElementById("tokenholder").style.visibility='visible';
   } else {
     istokenactive = false;      document.getElementById("tokenholder").style.visibility='hidden';
-      document.getElementById("shortenz").style.top='-90px';
+  
 
 
   }

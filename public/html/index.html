@@ -1,24 +1,23 @@
-
-
 <!DOCTYPE html>
 <html>
-   <head>
-      <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <script
-         src="jquery.min.js"></script>
-         <script src="js.cookie-2.2.0.min.js"></script>
-         <script src="requesthandler.js"></script>
-   </head>
-   <body>
-            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-            <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-            <script>
-            window.addEventListener("load", function(){
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="jquery.min.js"></script>
+    <script src="js.cookie-2.2.0.min.js"></script>
+    <script src="requesthandler.js"></script>
+</head>
+
+<body>
+      <div class=".page-flexbox-wrapper">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function(){
             window.cookieconsent.initialise({
               "palette": {
                 "popup": {
@@ -33,9 +32,9 @@
               "theme": "edgeless",
               "position": "bottom-right"
             })});
-            </script>
-      <style>
-         body {
+    </script>
+    <style>
+        body {
          display: flex;
          min-height: 100vh;
          flex-direction: column;
@@ -44,82 +43,85 @@
          flex: 1 0 auto;
          }
 
-         .footerz {
-               bottom: 0;
-               position: absolute;
-               width: 100%;
-         }
+         .page-flexbox-wrapper{
+         display: flex;
+         min-height: 100vh;
+         flex-direction: column;}
 
          .bt1 {
                position: absolute;
                left:0%;
          }
 
-      </style>
-      <header>
-      <nav class="green lighten-1" role="navigation">
-         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Shortnex</a>
-            <ul class="right hide-on-med-and-down">
-               <li><a href="https://github.com/lordjbs/Shortnex">Github</a></li>
-               <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
+    </style>
+    <header>
 
-            </ul>
-            <ul id="nav-mobile" class="side-nav">
-               <li><a href="https://github.com/lordjbs/Shortnex">Github</a></li>
-               <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
-
-            </ul>
-
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-         </div>
-      </nav>
-      </header>
-      <main id="main">
-      <div class="section no-pad-bot middleContent" id="index-banner">
-         <div class="container">
-            <br><br>
-            <h1 class="header center green-text">Shorten a link.</h1>
-            <div class="row center">
-               <h5 class="header col s12 light" id="u">Shortened URL: </h5>
+  <nav>
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">Shortnex</a>
+              <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                        <li><a href="https://github.com/lordjbs/Shortnex">Github</a></li>
+                        <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
+              </ul>
             </div>
-            <div class="row center">
-               <form class="col s12">
-                  <div class="row">
-                     <div class="input-field col s6" style="left: 25% !important;">
-                        <input placeholder="https://somx.me" id="url" type="text" class="validate">
-                        <label for="url">URL</label>
-                     </div>
-                  </div>
-               </form>
-               <form class="col s12" id="tokenholder">
-                        <div class="row">
-                           <div class="input-field col s6" style="left: 25% !important;">
-                              <input placeholder="Token" id="token" type="password" class="validate">
-                              <label for="token">TOKEN</label>
-                           </div>
-                        </div>
-                     </form>
-
-               <button id="shortenz" class="btn-large waves-effect waves-light green" onclick="pressed()">Shorten!</button>
-
-            </div>
-            <br><br>
-            <!-- <button onclick="registerColor()" id="re" class="bt1 waves-effect waves-light green btn"><i class="material-icons left">opacity</i> Change Color</button> -->
-
-         </div>
-      </div>
-      <main>
-      <footer class="page-footer green footerz">
-         <div class="container">
-         </div>
-         <div class="footer-copyright">
+          </nav>
+        
+          <ul class="sidenav" id="sidenav">
+                  <li><a href="https://github.com/lordjbs/Shortnex">Github</a></li>
+                  <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
+          </ul>
+    </header>
+    <main id="main">
+        <div class="section no-pad-bot middleContent" id="index-banner">
             <div class="container">
-               Shortnex | Made with <3 by lordjbs.
-            </div>
-         </div>
-      </footer>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-   </body>
-</html>
+                <br><br>
+                <h1 class="header center green-text">Shorten a link.</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light" id="u">Shortened URL: </h5>
+                </div>
+                <div class="row center">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6" style="left: 25% !important;">
+                                <input placeholder="https://somx.me" id="url" type="text" class="validate">
+                                <label for="url">URL</label>
+                            </div>
+                        </div>
+                    </form>
+                    <button id="shortenz" class="btn-large waves-effect waves-light green" onclick="pressed()">Shorten!</button>
 
+                    <form class="col s12" id="tokenholder">
+                        <div class="row">
+                            <div class="input-field col s6" style="left: 25% !important;">
+                                <input placeholder="Token" id="token" type="password" class="validate">
+                                <label for="token">TOKEN</label>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <br><br>
+                <!-- <button onclick="registerColor()" id="re" class="bt1 waves-effect waves-light green btn"><i class="material-icons left">opacity</i> Change Color</button> -->
+
+            </div>
+        </div>
+    </main>
+    <footer class="page-footer green ">
+        <div class="container">
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Shortnex | Made with <3 by lordjbs. </div>
+            </div>
+    </footer>
+    <script>
+            $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+        
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>      </div>
+</body>
+
+</html>
