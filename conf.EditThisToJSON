@@ -1,6 +1,6 @@
 {
     "port":3001,
-    "db": "test/tdb.db",
+    "db": "tdb.db",
     "devLog":true,
     "requestThroughProxy": false,
     "ratelimit": {
@@ -10,7 +10,7 @@
     },
     "userSystem":{
         "enabled": false,
-        "db": "test/users.db",
+        "db": "users.db",
         "password":"shortnex"
     },
 

@@ -41,6 +41,8 @@ app.use("/check/tokensystem", require("./routes/tokenactive.js"));
 app.use("/jquery.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/jquery.min.js'));});
 app.use("/requesthandler.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/requesthandler.js'));});
 app.use("/js.cookie-2.2.0.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/js.cookie-2.2.0.min.js'));});
+app.use("/logo.ico", function(req,res,next) {return res.sendFile(path.resolve('public/html/logo.ico'));});
+app.use("/logo.png", function(req,res,next) {return res.sendFile(path.resolve('public/html/logo.png'));});
 
 
 app.use(function(req, res, next) {
