@@ -26,7 +26,8 @@ router.get('/', function(req, res, next) {
               res.send({
                 success: false,
                  error: err,
-                 code:0
+                 message: "Unexpected User Database Error (Error Code: 6)",
+                 code:6
               });
   
             }else {

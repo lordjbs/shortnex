@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
           if(!utils.isEmpty(docs)) {
               u = docs[0].url;
             }else {
-                return res.send({error: "Cannot find in db."});
+                return res.send({success: false, error: "This URL is not in the Database. (Error Code: 5)"});
             }
             
           if(!u.startsWith("https://") || !u.startsWith("http://")) {
@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
     
           return res.redirect(docs[0].url);
         }).catch(function(error) {
-            res.send({error});
+            res.send({success: false, error, message:"Unexpected Database Error. (Error Code: 0)"});
         });
       }catch(e) {
         return;

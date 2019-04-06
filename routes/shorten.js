@@ -23,6 +23,7 @@ router.get('/', function(req, res, next) {
     }
 
     if (config.userSystem.enabled == true) {
+        console.log("enabled")
         var token = req.query.token;
         if (!token) {
             return res.send({
@@ -31,15 +32,23 @@ router.get('/', function(req, res, next) {
             });
         } else {
             const userdb = require("../db/userdb.js");
-            userdb.get({
-                token
-            }, function(error, response) {
+            userdb.get({token}, function(error, response) {
+                console.log(response)
                 try {
                     if (error) {
                         res.send({
                             success: false,
-                            error: "No Permissions!"
+                            error: "No Permissions!",
+                            code:3
                         });
+                    }
+
+                    if(response = []) {
+                        return res.send({
+                            success:false,
+                            error: "No Permissions!",
+                            code:4
+                        })
                     }
                     var id = utils.makeId();
 

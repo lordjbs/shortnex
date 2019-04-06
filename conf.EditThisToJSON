@@ -1,7 +1,7 @@
 {
-    "port":3001,
+    "port":80,
     "db": "tdb.db",
-    "devLog":true,
+    "devLog":false,
     "requestThroughProxy": false,
     "ratelimit": {
         "enabled":true,
@@ -16,6 +16,6 @@
 
     "disclaimer": {
         "url":"https://github.com/lordjbs/Shortnex/blob/master/DISCLAIMER.md",
-        "accept":true
+        "accept":false
     }
 }
