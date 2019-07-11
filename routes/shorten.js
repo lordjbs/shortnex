@@ -31,8 +31,7 @@ router.get('/', function(req, res, next) {
                 error: "no token given"
             });
         } else {
-            const userdb = require("../db/userdb.js");
-            userdb.get({token}, function(error, response) {
+            db.user.getToken(token, function(error, response) {
                 console.log(response)
                 try {
                     if (error) {
@@ -43,7 +42,7 @@ router.get('/', function(req, res, next) {
                         });
                     }
 
-                    if(response = []) {
+                    if(utils.isEmpty(response)) {
                         return res.send({
                             success:false,
                             error: "No Permissions!",
@@ -55,28 +54,22 @@ router.get('/', function(req, res, next) {
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "http://" + url;
                     }
-
-                    db.insert({
-                        id,
-                        url,
-                        date: new Date()
-                    }, function(err) {
+                    db.url.add(id,url,new Date(), function(err) {
                         if (err) {
-
                             res.send({
                                 success: false,
                                 error: err,
                                 code: 0
                             });
-
+        
                         } else {
-
+        
                             res.send({
                                 success: true,
                                 id,
                                 url: req.get('host')
                             });
-
+        
                         }
                     });
                 } catch (e) {
@@ -97,13 +90,8 @@ router.get('/', function(req, res, next) {
                 url = "http://" + url;
             }
 
-            db.insert({
-                id,
-                url,
-                date: new Date()
-            }, function(err) {
+            db.url.add(id,url,new Date(), function(err) {
                 if (err) {
-
                     res.send({
                         success: false,
                         error: err,

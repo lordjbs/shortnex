@@ -18,7 +18,6 @@ const config = require("./conf.json");
 const database = require("./db/db.js");
 const startup = require("./lib/startup.js");
 const ratelimit = require("./lib/ratelimit.js");
-const userdatabase = require("./db/userdb.js");
 
 const app = express();
 
@@ -36,13 +35,9 @@ app.use(function(req,res,next) {ratelimit.request(req,res,next);});
 
 app.use("/", require("./routes/index.js"));
 app.use("/user/create", require("./routes/user/create.js"));
+app.use("/user/delete", require("./routes/user/delete.js"));
 app.use("/shorten", require("./routes/shorten.js"));
 app.use("/check/tokensystem", require("./routes/tokenactive.js"));
-/*app.use("/jquery.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/jquery.min.js'));});
-app.use("/requesthandler.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/requesthandler.js'));});
-app.use("/js.cookie-2.2.0.min.js", function(req,res,next) {return res.sendFile(path.resolve('public/html/js.cookie-2.2.0.min.js'));});
-app.use("/logo.ico", function(req,res,next) {return res.sendFile(path.resolve('public/html/logo.ico'));});
-app.use("/logo.png", function(req,res,next) {return res.sendFile(path.resolve('public/html/logo.png'));});*/
 
 app.use('/static', express.static('public/html/static'));
 
@@ -65,7 +60,7 @@ const port =  process.env.PORT || config.port || 8080;
 
 app.listen(port, function () {
     ratelimit.start();
-    startup(port, database, userdatabase);
+    startup(port);
 
     if(!config.disclaimer.accept) {
         console.log("[shortnex] You have not accepted the Disclaimer. Look into the Config.\nThe Process will now automatically end.");

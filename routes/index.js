@@ -13,13 +13,13 @@ router.get('/', function(req, res, next) {
         }
     
         try{
-        require("../db/db.js").get({id}, function(err,docs) {
+        require("../db/db.js").url.get(id, function(err,docs) {
             if(err) {
                 return res.send({err});
             }
           var u;
           if(!utils.isEmpty(docs)) {
-              u = docs[0].url;
+              u = docs;
             }else {
                 return res.send({success: false, error: "This URL is not in the Database. (Error Code: 5)"});
             }
@@ -28,7 +28,7 @@ router.get('/', function(req, res, next) {
             u = "http://" + u;
           }
     
-          return res.redirect(docs[0].url);
+          return res.redirect(docs);
         }).catch(function(error) {
             res.send({success: false, error, message:"Unexpected Database Error. (Error Code: 0)"});
         });

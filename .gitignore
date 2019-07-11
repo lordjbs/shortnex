@@ -1,4 +1,6 @@
-/db/db.old
 /node_modules/*
 
 /test/*
+
+conf.json
+db.json

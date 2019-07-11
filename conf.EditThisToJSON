@@ -1,6 +1,6 @@
 {
     "port":80,
-    "db": "tdb.db",
+    "db": "database.json",
     "devLog":false,
     "requestThroughProxy": false,
     "ratelimit": {
