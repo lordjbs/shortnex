@@ -1,11 +1,15 @@
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
-const adapter = new FileSync(require("../config.json").db)
+const adapter = new FileSync(require("../conf.json").db)
 const db = low(adapter)
 
 
+
 const database = {
+  test: function(func) {
+    func(db.get("initiated").find({bool:true}).value());
+  },
   url: {
     add: function(id, url, date, func) {
       console.log("ran")

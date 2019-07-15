@@ -60,12 +60,12 @@ const port =  process.env.PORT || config.port || 8080;
 
 app.listen(port, function () {
     ratelimit.start();
-    startup(port);
-
+    startup(port, database);
     if(!config.disclaimer.accept) {
         console.log("[shortnex] You have not accepted the Disclaimer. Look into the Config.\nThe Process will now automatically end.");
         process.exit(1);
     } 
+
 });
 
 
