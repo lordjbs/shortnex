@@ -10,7 +10,6 @@
     },
     "userSystem":{
         "enabled": false,
-        "db": "users.db",
         "password":"shortnex"
     },
 
