@@ -3,6 +3,7 @@
     "db": "database.json",
     "devLog":false,
     "requestThroughProxy": false,
+    "url":"SET YOUR URL",
     "ratelimit": {
         "enabled":true,
         "requests":5000,

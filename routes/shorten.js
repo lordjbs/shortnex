@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
                             res.send({
                                 success: true,
                                 id,
-                                url: req.get('host')
+                                url: config.url
                             });
         
                         }
@@ -101,7 +101,7 @@ router.get('/', function(req, res, next) {
                     res.send({
                         success: true,
                         id,
-                        url: req.get('host')
+                        url: config.url
                     });
 
                 }

@@ -3,6 +3,7 @@
     "db": "db.json",
     "devLog":false,
     "requestThroughProxy": false,
+    "url":"localhost:3001",
     "ratelimit": {
         "enabled":true,
         "requests":5000,
