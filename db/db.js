@@ -12,29 +12,23 @@ const database = {
   },
   url: {
     add: function(id, url, date, func) {
-      console.log("ran")
       try {
       db.get("urls")
       .push({id, url, date})
       .write();
-      console.log("done");
       func(null);
       } catch(e) {
         func(e);
         console.log(e);
       }
 
-      console.log(db.getState());
     },
     get: function(id, func) {
-      console.log("ran")
       var url = "";
       var err = null;
       try {
         url = db.get("urls").find({id:id}).value().url;
         docs = url;
-
-        console.log(url);
 
         func(err,url);
       } catch(e) {
@@ -57,7 +51,6 @@ const database = {
           console.log(e);
         }
   
-        console.log(db.getState());
       },
       getToken: function(token, func) {
         var token = null;
@@ -65,7 +58,6 @@ const database = {
         try {
           token = db.has(token);
   
-          console.log(token);
   
           func(err,token);
         } catch(e) {

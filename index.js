@@ -24,7 +24,7 @@ const app = express();
 if(config.devLog) {
     app.use(logger("dev"));
 } else {
-    app.use(logger("default"));
+    app.use(logger("tiny"));
 }
 
 app.use(express.static(path.join(__dirname, "public")));

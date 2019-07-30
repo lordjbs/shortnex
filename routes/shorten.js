@@ -23,7 +23,6 @@ router.get('/', function(req, res, next) {
     }
 
     if (config.userSystem.enabled == true) {
-        console.log("enabled")
         var token = req.query.token;
         if (!token) {
             return res.send({
@@ -32,7 +31,6 @@ router.get('/', function(req, res, next) {
             });
         } else {
             db.user.getToken(token, function(error, response) {
-                console.log(response)
                 try {
                     if (error) {
                         res.send({
