@@ -8,7 +8,7 @@ const db = low(adapter)
 
 const database = {
   test: function(func) {
-    func(db.get("initiated").find({bool:true}).value());
+    func(db.get("init").find({bool:true}).value());
   },
   url: {
     add: function(id, url, date, func) {
