@@ -6,7 +6,7 @@ const utils = require("../lib/util.js");
 
 router.get('/', function(req, res, next) {
     var string = req.query.string;
-    return res.send({string.length()});
+    return res.send(string.length());
 });
 
   
