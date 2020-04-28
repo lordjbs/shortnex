@@ -1,7 +1,0 @@
-/node_modules/*
-
-/test/*
-
-conf.json
-
-db.json
