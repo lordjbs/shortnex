@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="UTF-8">
+    <meta name="title" content="shortnex">
+    <meta name="og:title" content="shortnex">
+    <meta name="twitter:title" content="shortnex">
+    <meta name="og:site_name" content="shortnex">
+    <meta name="description" content="shortnex | a small shortener">
+    <meta name="og:description" content="shortnex | a small shortener">
+    <meta name="twitter:description" content="shortnex | a small shortener">
+
+    <link rel="icon" href="static/logo.ico">
+
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/js.cookie-2.2.0.min.js"></script>
+    <script src="/static/requesthandler.js"></script>
+</head>
+
+<body>
+    <div class=".page-flexbox-wrapper">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+        <script>
+            window.addEventListener("load", function(){
+                window.cookieconsent.initialise({
+                  "palette": {
+                    "popup": {
+                      "background": "#efefef",
+                      "text": "#404040"
+                    },
+                    "button": {
+                      "background": "#66bb6a",
+                      "text": "#ffffff"
+                    }
+                  },
+                  "theme": "edgeless",
+                  "position": "bottom-right"
+                })});
+        </script>
+
+        <header>
+
+            <nav>
+                <div class="nav-wrapper green">
+                    <a href="#!" class="brand-logo center">shortnex</a>
+                    <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="https://owo.codes/jbs/Shortnex">Git</a></li>
+                        <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <ul class="sidenav" id="sidenav">
+                <li><a href="https://owo.codes/jbs/Shortnex">Git</a></li>
+                <li><a onclick="registerColor()"><i class="material-icons left">opacity</i></a></li>
+            </ul>
+        </header>
+        <main id="main">
+            <div class="section no-pad-bot middleContent" id="index-banner">
+                <div class="container">
+                    <br><br>
+                    <h1 class="header center green-text">Shorten a link.</h1>
+                    <div class="row center">
+                        <h5 class="header col s12 light" id="u">Shortened URL: </h5>
+                    </div>
+                    <div class="row center">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6" style="left: 25% !important;">
+                                    <input placeholder="https://example.org" id="url" type="text" class="validate">
+                                    <label for="url">URL</label>
+                                </div>
+                            </div>
+                        </form>
+                        <button id="shortenz" class="btn-large waves-effect waves-light green" onclick="pressed()">Shorten!</button>
+
+                        <form class="col s12" id="tokenholder">
+                            <div class="row">
+                                <div class="input-field col s6" style="left: 25% !important;">
+                                    <input placeholder="Token" id="token" type="password" class="validate">
+                                    <label for="token">TOKEN</label>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <br><br>
+                    <!-- <button onclick="registerColor()" id="re" class="bt1 waves-effect waves-light green btn"><i class="material-icons left">opacity</i> Change Color</button> -->
+
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer green footer ft" style="position:fixed;bottom:0;left:0;width:100%;">
+            <div class="container">
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                     shortnex | Made with &#9829; by jbs.
+                </div>
+            </div>
+        </footer>
+        <script>
+        $(document).ready(function(){
+          $('.sidenav').sidenav();
+        });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </div>
+</body>
+
+</html>
