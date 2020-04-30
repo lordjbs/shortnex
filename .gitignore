@@ -2,6 +2,6 @@
 shortnex.iml
 database.db
 config.json
-*.json
 *.db
+*.iml
 /__pycache__/
