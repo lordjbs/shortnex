@@ -56,8 +56,6 @@ def goto(id):
     if not url:
         return {"success": False, "error": "Invalid ID"}
     else:
-        if not str.startswith(url, "https://") or not str.startswith(url, "http://"):
-            return redirect("https://" + url)
         return redirect(url)
 
 
