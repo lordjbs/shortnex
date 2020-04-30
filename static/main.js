@@ -14,7 +14,7 @@ function shorten() {
             if(!data.success) {
                 setInput(data.error)
             } else {
-                const baseURL = data.url.slice(0, -8)
+                const baseURL = data.url;
                 setInput(`${baseURL}/${data.id}`)
             }
         }

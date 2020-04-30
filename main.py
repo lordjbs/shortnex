@@ -17,7 +17,7 @@ print("shortnex " + VERSION + "\nmade by jbs")
 print("shortnex | Loading config and flask")
 with open('config.json') as _config:
     data = json.load(_config)
-config = {"port": data["port"], "database": data["database"]}
+config = {"port": data["port"], "database": data["database"], "url": data["url"]}
 db = Database(config.get("database"))
 
 app = Flask(__name__, static_url_path='/static/')
