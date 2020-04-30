@@ -23,12 +23,11 @@ def checkIfProperURL(url):
 
 def returnProperURL(url):
     out = url
+    print(out)
 
-    if not re.match(r'^https://', url) or not re.match(r'^http://', url):
-        out = "https://" + url
-
-    if not out.startswith("https://") or not out.startswith("http://"):
-        out = "https://" + url
+    if not re.match(r'^https://', url) or not out.startswith("https://"):
+        if not re.match(r'^http://', url) or not out.startswith("http://"):
+            out = "https://" + url
     print(out)
     return out
 
