@@ -1,5 +1,7 @@
 /.idea/
-/shortnex.iml
-/database.db
-/config.json
+shortnex.iml
+database.db
+config.json
+*.json
+*.db
 /__pycache__/
