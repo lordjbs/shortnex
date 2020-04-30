@@ -52,10 +52,13 @@ def shorten():
 
 @app.route("/<id>")
 def goto(id):
-    if not db.getURL(id):
+    url = db.getURL(id)
+    if not url:
         return {"success": False, "error": "Invalid ID"}
     else:
-        return redirect(db.getURL(id))
+        if not str.startswith(url, "https://") or not str.startswith(url, "http://"):
+            return redirect("https://" + url)
+        return redirect(url)
 
 
 if __name__ == "__main__":
