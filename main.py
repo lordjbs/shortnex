@@ -5,12 +5,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-from flask import Flask, request, redirect, send_from_directory, render_template, url_for
+from flask import Flask, request, redirect, render_template
 import utils
 from database import Database
 import json
 import time
 
+VERSION = "v2.0"
+print("shortnex " + VERSION + "\nmade by jbs")
+
+print("shortnex | Loading config and flask")
 with open('config.json') as _config:
     data = json.load(_config)
 config = {"port": data["port"], "database": data["database"]}
@@ -18,20 +22,18 @@ db = Database(config.get("database"))
 
 app = Flask(__name__, static_url_path='/static/')
 
-
 @app.route('/')
 def index():
     return render_template("index.html")
 
 
-# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://lordjbs.xyz"}' http://localhost:5000/shorten
+# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
 @app.route("/shorten", methods=['POST'])
 def shorten():
     if request.method != "POST":
         return {"success": "false", "error": "This route is POST only."}
 
     content = request.get_json()
-    print(content)
     if not "url" in content:
         return {"success": False, "error": "The parameter 'url' does not exist.", "code": 1}
 
@@ -42,10 +44,10 @@ def shorten():
 
     try:
         id = utils.createID()
-        db.add(id, content.get("url"), int(time.time()))
+        db.addURL(id, content.get("url"), int(time.time()))
         return {"success": True, "id": id, "url": request.base_url}
     except Exception:
-        return {"success": False, "message": "Error has occurred while shortening. Please contact an administrator."}
+        return {"success": False, "error": "Error has occurred while shortening. Please contact an administrator."}
 
 
 @app.route("/<id>")
@@ -55,7 +57,6 @@ def goto(id):
     else:
         return redirect(db.getURL(id))
 
-@app.route("/check/tokensystem")
-def tokensystem():
-    return {"active": False}
 
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=config.get("port"))

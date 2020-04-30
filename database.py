@@ -31,8 +31,7 @@ class Database:
         output = self.db.execute("CREATE TABLE IF NOT EXISTS urls (id text, url text, date integer)")
         self.conn.commit()
 
-    def add(self, id, url, date):
-        print("cbt")
+    def addURL(self, id, url, date):
         try:
             self.db.execute("INSERT INTO urls VALUES (:i, :u, :d)", {'i': id, 'u': url, 'd': date})
         except Exception as e:

@@ -1,21 +1,78 @@
-body {
-     display: flex;
-     min-height: 100vh;
-     flex-direction: column;
- }
- main {
-     flex: 1 0 auto;
- }
- .middleContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.main {
+    background-color: #121212;
+    color: #ffffff;
     text-align: center;
-    margin-top: 4%;
-    margin-bottom: 4%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed
 }
-.bt1 {
-    position: absolute;
-    left:0%;
+
+body {
+    background-color: #121212;
+}
+
+.title {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 70px;
+    line-height: 2px;
+}
+
+.normal {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.l {
+    color: #ffffff;
+}
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: #ffffff;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #1f1e1e;
+    height:50px;
+    color: white;
+    text-align: center;
+}
+
+.footertxt {
+    text-align: center;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 25px;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.link {
+    color: white;
 }
