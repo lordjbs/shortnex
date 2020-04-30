@@ -1,3 +1,4 @@
 /.idea/
 shortnex.iml
 database.db
+/__pycache__/
