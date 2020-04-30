@@ -41,7 +41,7 @@ def shorten():
         return {"success": False, "error": "That is not a proper url.", "code": 1}
 
     url = utils.returnProperURL(content.get("url"))
-
+    #TODO: Make the url config thing better lol
     try:
         id = utils.createID()
         db.addURL(id, content.get("url"), int(time.time()))
