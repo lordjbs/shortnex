@@ -45,7 +45,7 @@ def shorten():
     try:
         id = utils.createID()
         db.addURL(id, content.get("url"), int(time.time()))
-        return {"success": True, "id": id, "url": request.base_url}
+        return {"success": True, "id": id, "url": config.get("url")}
     except Exception:
         return {"success": False, "error": "Error has occurred while shortening. Please contact an administrator."}
 
