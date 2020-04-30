@@ -56,7 +56,7 @@ def goto(id):
     if not url:
         return {"success": False, "error": "Invalid ID"}
     else:
-        return redirect(url)
+        return redirect(utils.returnProperURL(url))
 
 
 if __name__ == "__main__":
