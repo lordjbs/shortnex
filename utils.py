@@ -1,4 +1,3 @@
-
 # shortnex v2.0
 # made by jbs (https://github.com/lordjbs/)
 
@@ -6,14 +5,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-import string, random, re
+import random
+import re
+import string
 
 regex = re.compile(
-    r'^(?:http|ftp)s?://'  # http:// or https://
-    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-    r'localhost|'  # localhost...
-    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-    r'(?::\d+)?'  # optional port
+    r'^(?:http|ftp)s?://'
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
+    r'localhost|'
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ip
+    r'(?::\d+)?'  # port
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
@@ -28,7 +29,6 @@ def returnProperURL(url):
             out = "https://" + url
     return out
 
+
 def createID():
-    ran = ''.join([random.choice(string.ascii_letters
-                                    + string.digits) for n in range(6)])
-    return ran
+    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
