@@ -1,5 +1,4 @@
 # shortnex v2.0
-# shortnex v2.0
 # made by jbs (https://github.com/lordjbs/)
 # Copyright (C) 2018-2020 jbs
 #
