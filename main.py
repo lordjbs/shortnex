@@ -69,7 +69,7 @@ def shorten():
     if utils.checkIfProperURL(content.get("url")) is None:
         return {"success": False, "error": "That is not a proper url.", "code": 1}
 
-    url = utils.returnProperURL(content.get("url"))
+    # url = utils.returnProperURL(content.get("url"))
     # TODO: Make the url config thing better lol
     try:
         id = utils.createID()

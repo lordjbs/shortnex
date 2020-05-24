@@ -18,9 +18,14 @@
 var lastURL = "";
 
 function shorten() {
+    if(document.getElementById("urlinput").value == " " || document.getElementById("urlinput").value == "") {
+        return setInput("This is empty?")
+    }
+
     if(document.getElementById("urlinput").value == lastURL) {
         return setInput("Hey, you already tried that.")
     }
+
     $.ajax({
         url: "/shorten",
         type: "POST",
