@@ -1,5 +1,10 @@
 {
   "port": 5000,
   "database": "database.db",
-  "url": "http://localhost"
+  "url": "http://localhost",
+  "ratelimit": {
+    "enabled": true,
+    "timeUntilClear": 60,
+    "maxRequests": 30
+  }
 }

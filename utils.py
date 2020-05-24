@@ -16,6 +16,7 @@
 import random
 import re
 import string
+import threading
 
 regex = re.compile(
     r'^(?:http|ftp)s?://'
@@ -40,3 +41,13 @@ def returnProperURL(url):
 
 def createID():
     return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
+
+# https://stackoverflow.com/questions/2697039/python-equivalent-of-setinterval/14035296#14035296
+def set_interval(func, sec):
+    def func_wrapper():
+        set_interval(func, sec)
+        func()
+
+    t = threading.Timer(sec, func_wrapper)
+    t.start()
+    return t

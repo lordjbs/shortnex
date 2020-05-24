@@ -18,15 +18,32 @@ import utils
 from database import Database
 import json
 import time
+from ratelimit import Ratelimit
 
 VERSION = "v2.0"
 print("shortnex " + VERSION + "\nmade by jbs")
 
-print("shortnex | Loading config and flask")
+print("shortnex | Loading config")
 with open('config.json') as _config:
     data = json.load(_config)
-config = {"port": data["port"], "database": data["database"], "url": data["url"]}
+config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"]}
+print("shortnex | Done...")
 db = Database(config.get("database"))
+
+print("shortnex | Loading ratelimit service...")
+ratelimits = Ratelimit()
+
+if config["rEnabled"]:
+    try:
+        ratelimits.loop()
+        print("shortnex | Done.")
+    except Exception:
+        print("shortnex | Failed loading ratelimit service, you could report this issue on git... Exiting..")
+        exit(0)
+else:
+    print("Ratelimit service is disabled...")
+
+print("shortnex | Loading flask...")
 
 app = Flask(__name__, static_url_path='/static/')
 
@@ -39,9 +56,12 @@ def index():
 # curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
 @app.route("/shorten", methods=['POST'])
 def shorten():
+    if not ratelimits.check(request.remote_addr):
+        return {"success": "false", "error": "You are being ratelimited."}
+
     if request.method != "POST":
         return {"success": "false", "error": "This route is POST only."}
-
+    
     content = request.get_json()
     if not "url" in content:
         return {"success": False, "error": "The parameter 'url' does not exist.", "code": 1}
