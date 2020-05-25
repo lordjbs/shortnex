@@ -16,7 +16,7 @@
 
 import sqlite3
 import traceback
-
+from users import User
 
 class Database:
     def __init__(self, file):
@@ -40,6 +40,7 @@ class Database:
     def checkStart(self):
         output = self.db.execute("CREATE TABLE IF NOT EXISTS urls (id text, url text, date integer)")
         self.conn.commit()
+        output = self.db.execute("CREATE TABLE IF NOT EXISTS users (name text, email text, token text)")
 
     def addURL(self, id, url, date):
         try:
@@ -59,3 +60,26 @@ class Database:
                 return value
         except TypeError:
             return None
+    
+    def getAllUsers(self):
+        try:
+            a = self.db.execute("SELECT * FROM users;")
+            values = list(a.fetchall())
+            output = []
+            for val in values:
+                output.append(User(val[0], val[1], val[2]))
+            return output
+        except Exception:
+            return None
+    
+    def addUser(self, user):
+        if not isinstance(user, User):
+            return {"success": False, "message": "That is not a user object."}
+        else:
+            try:
+                self.db.execute("""INSERT INTO users VALUES (:a, :b, :c)""", {'a': user.getName(), 'b': user.getEmail(), 'c': user.getToken()})
+                self.conn.commit()
+                return True
+            except Exception as e:
+                traceback.print_exc()
+                return {"success": False, "message": "Failed the query."}
