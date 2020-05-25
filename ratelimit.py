@@ -19,7 +19,7 @@ import threading
 
 with open('config.json') as _config:
     data = json.load(_config)
-config = {"timeUntilClear": data["ratelimit"]["timeUntilClear"], "maxRequests": data["ratelimit"]["maxRequests"], "enabled": data["ratelimit"]["enabled"]}
+config = {"timeUntilClear": data["ratelimit"]["timeUntilClear"], "maxRequests": data["ratelimit"]["maxRequests"], "enabled": data["ratelimit"]["enabled"], "maxMultiplier": data["ratelimit"]["maxMultiplier"]}
 
 class Ratelimit:
     def __init__(self):
@@ -61,7 +61,19 @@ class Ratelimit:
     
     # TODO: add that if the number of requests exceed a given number above the maxrequests value to add the ip to the array again
     def clearIps(self):
-        self.currentIPs = {}
+        self.currentIPs = self.checkForAbuse()
+
+    def checkForAbuse(self):
+        temp = self.currentIPs
+        output = {}
+        maxReq = config["maxRequests"] * config["maxMultiplier"]
+        for cip, nmbr in temp:
+            if nmbr > maxReq:
+                output[cip] = config["maxRequests"]
+        
+        return output
+        
+            
     
     # https://stackoverflow.com/questions/2697039/python-equivalent-of-setinterval/14035296#14035296
     def set_interval(self, sec):
