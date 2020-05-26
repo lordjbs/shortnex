@@ -101,10 +101,12 @@ def createUser():
     
     reqcon = request.get_json()
 
-    if not "name" or "email" in reqcon:
-        return {"success": False, "message":"Missing argument, either name or email."}
+    print(reqcon)
+
+    if not 'auth' or not 'name' or not 'email' in reqcon:
+        return {"success": False, "message":"Missing argument, either name, email or auth."}
     
-    token = utils.createRandomString(16)
+    token = utils.createRandomString(32)
     user = User(reqcon["name"], reqcon["email"], token)
     users.addUser(user)
 

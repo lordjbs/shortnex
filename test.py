@@ -7,4 +7,4 @@ with open('config.json') as _config:
 config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"]}
 db = database.Database(config.get("database"))
 #print(db.addUser(User("test", "test@lordjbs.xyz", "test123")))
-print(db.getAllUsers()[0].getName())
+print(db.getAllUsers()[4].getToken())
