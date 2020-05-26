@@ -83,3 +83,5 @@ class Database:
             except Exception as e:
                 traceback.print_exc()
                 return {"success": False, "message": "Failed the query."}
+    
+    #TODO: Add remove user

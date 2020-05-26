@@ -19,6 +19,7 @@ from database import Database
 import json
 import time
 from ratelimit import Ratelimit
+from users import User, UserSystem
 
 VERSION = "v2.0"
 print("shortnex " + VERSION + "\nmade by jbs")
@@ -43,6 +44,9 @@ if config["rEnabled"]:
 else:
     print("Ratelimit service is disabled...")
 
+#TODO: Handle usersystem startup properly
+users = UserSystem(db)
+
 print("shortnex | Loading flask...")
 
 app = Flask(__name__, static_url_path='/static/')
@@ -57,17 +61,17 @@ def index():
 @app.route("/shorten", methods=['POST'])
 def shorten():
     if not ratelimits.check(request.remote_addr):
-        return {"success": "false", "error": "You are being ratelimited."}
+        return {"success": False, "message": "You are being ratelimited."}
 
     if request.method != "POST":
-        return {"success": "false", "error": "This route is POST only."}
+        return {"success": False, "message": "This route is POST only."}
     
     content = request.get_json()
     if not "url" in content:
-        return {"success": False, "error": "The parameter 'url' does not exist.", "code": 1}
+        return {"success": False, "message": "The parameter 'url' does not exist.", "code": 1}
 
     if utils.checkIfProperURL(content.get("url")) is None:
-        return {"success": False, "error": "That is not a proper url.", "code": 1}
+        return {"success": False, "message": "That is not a proper url.", "code": 1}
 
     # url = utils.returnProperURL(content.get("url"))
     # TODO: Make the url config thing better lol
@@ -76,16 +80,37 @@ def shorten():
         db.addURL(id, content.get("url"), int(time.time()))
         return {"success": True, "id": id, "url": config.get("url")}
     except Exception:
-        return {"success": False, "error": "Error has occurred while shortening. Please contact an administrator."}
+        return {"success": False, "message": "Error has occurred while shortening. Please contact an administrator."}
 
 
 @app.route("/<id>")
 def goto(id):
+
     url = db.getURL(id)
     if not url:
         return {"success": False, "error": "Invalid ID"}
     else:
         return redirect(utils.returnProperURL(url))
+
+#TODO: Handle Auth header
+# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"auth":"thetoken", "name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
+@app.route("/users/create", methods=['POST'])
+def createUser():
+    if request.method != 'POST':
+        return {"success": False, "message":"This route is POST only."}
+    
+    reqcon = request.get_json()
+
+    if not "name" or "email" in reqcon:
+        return {"success": False, "message":"Missing argument, either name or email."}
+    
+    token = utils.createRandomString(16)
+    user = User(reqcon["name"], reqcon["email"], token)
+    users.addUser(user)
+
+    return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
+
+
 
 
 if __name__ == "__main__":

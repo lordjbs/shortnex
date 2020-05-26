@@ -42,6 +42,9 @@ def returnProperURL(url):
 def createID():
     return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
 
+def createRandomString(nmbr):
+    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(nmbr)]) 
+
 # https://stackoverflow.com/questions/2697039/python-equivalent-of-setinterval/14035296#14035296
 def set_interval(func, sec):
     def func_wrapper():

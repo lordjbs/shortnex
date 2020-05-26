@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from main import db
 
 class User:
     def __init__(self, _name, _email, _token):
@@ -35,8 +34,9 @@ class User:
         return self.shortenedLinks
 
 class UserSystem:
-    def __init__(self):
-        self.users = db.getAllUsers()
+    def __init__(self, _db):
+        self.users = _db.getAllUsers()
+        self.db = _db
 
     def checkIfUserExists(self, token):
         output = False
@@ -48,14 +48,13 @@ class UserSystem:
         
         return output
 
-    #add db shit
     def addUser(self, userobj):
         if isinstance(userobj, User):
-            db.addUser(userobj)
+            self.db.addUser(userobj)
             self.refresh()
         else:
             return {"success": False, "message": "Not a users.py:User() object."}
     
     def refresh(self):
-        self.users = db.getAllUsers()
+        self.users = self.db.getAllUsers()
 
