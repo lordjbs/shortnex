@@ -55,6 +55,13 @@ class UserSystem:
         else:
             return {"success": False, "message": "Not a users.py:User() object."}
     
+    def removeUser(self, userobj):
+        if isinstance(userobj, User):
+            self.db.addUser(userobj)
+            self.refresh()
+        else:
+            return {"success": False, "message": "Not a users.py:User() object."}
+    
     def refresh(self):
         self.users = self.db.getAllUsers()
 

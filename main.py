@@ -18,6 +18,7 @@ import utils
 from database import Database
 import json
 import time
+import traceback
 from ratelimit import Ratelimit
 from users import User, UserSystem
 
@@ -27,7 +28,7 @@ print("shortnex " + VERSION + "\nmade by jbs")
 print("shortnex | Loading config")
 with open('config.json') as _config:
     data = json.load(_config)
-config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"]}
+config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"], "uEnabled": data["usersystem"]}
 print("shortnex | Done...")
 db = Database(config.get("database"))
 
@@ -37,19 +38,33 @@ ratelimits = Ratelimit()
 if config["rEnabled"]:
     try:
         ratelimits.loop()
-        print("shortnex | Done.")
+        print("shortnex | Done loading ratelimit service!")
     except Exception:
+        traceback.print_exc()
         print("shortnex | Failed loading ratelimit service, you could report this issue on git... Exiting..")
         exit(0)
 else:
-    print("Ratelimit service is disabled...")
+    print("shortnex | Ratelimit service is disabled, not loading.")
 
 #TODO: Handle usersystem startup properly
-users = UserSystem(db)
+
+print("shortnex | Loading user service...")
+if config["uEnabled"]:
+    try:
+        users = UserSystem(db)
+        print("shortnex | Done loading user service!")
+    except Exception:
+        traceback.print_exc()
+        print("shortnex | Failed loading user service, you could report this issue on git... Exiting..")
+        exit(0)
+else:
+    print("shortnex | User service is disabled, not loading.")
 
 print("shortnex | Loading flask...")
 
 app = Flask(__name__, static_url_path='/static/')
+
+print("shortnex | Successfully started! :)")
 
 
 @app.route('/')
@@ -57,7 +72,7 @@ def index():
     return render_template("index.html")
 
 
-# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+# curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 46gRGjdWEqqZJ95xKYLYkJMtWsvZkncW" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
 @app.route("/shorten", methods=['POST'])
 def shorten():
     if not ratelimits.check(request.remote_addr):
@@ -65,6 +80,23 @@ def shorten():
 
     if request.method != "POST":
         return {"success": False, "message": "This route is POST only."}
+
+    #Authorization
+    authed = False
+    if config["uEnabled"]:
+        headers = list(request.headers)
+
+        for key, val in headers:
+            if "Authorization" in key:
+                print(val)
+                if not users.checkIfUserExists(val):
+                    return {"success": False, "message": "No permissions"}
+                else:
+                    authed = True
+        
+        if not authed:
+            return {"success": False, "message": "No permissions."}
+
     
     content = request.get_json()
     if not "url" in content:
@@ -75,6 +107,7 @@ def shorten():
 
     # url = utils.returnProperURL(content.get("url"))
     # TODO: Make the url config thing better lol
+    # TODO: Add the shortened url to user?
     try:
         id = utils.createID()
         db.addURL(id, content.get("url"), int(time.time()))

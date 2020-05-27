@@ -67,10 +67,14 @@ class Ratelimit:
         temp = self.currentIPs
         output = {}
         maxReq = config["maxRequests"] * config["maxMultiplier"]
-        for cip, nmbr in temp:
-            if nmbr > maxReq:
-                output[cip] = config["maxRequests"]
-        
+        if temp:
+            try:
+                for cip, nmbr in temp:
+                    if nmbr > maxReq:
+                        output[cip] = config["maxRequests"]
+            #properly handle this, debug i guess
+            except Exception:
+                self.a = ""
         return output
         
             
