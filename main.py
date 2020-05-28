@@ -46,7 +46,6 @@ if config["rEnabled"]:
 else:
     print("shortnex | Ratelimit service is disabled, not loading.")
 
-#TODO: Handle usersystem startup properly
 
 print("shortnex | Loading user service...")
 if config["uEnabled"]:
@@ -107,7 +106,6 @@ def shorten():
 
     # url = utils.returnProperURL(content.get("url"))
     # TODO: Make the url config thing better lol
-    # TODO: Add the shortened url to user?
     try:
         id = utils.createID()
         db.addURL(id, content.get("url"), int(time.time()))
@@ -126,9 +124,12 @@ def goto(id):
         return redirect(utils.returnProperURL(url))
 
 #TODO: Handle Auth header 
-# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"auth":"123456", "name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
+# curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 123456" --request POST --data '{"name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
+
+#TODO: Add handlers for if usersys is disabled
 @app.route("/users/create", methods=['POST'])
 def createUser():
+
     if request.method != 'POST':
         return {"success": False, "message":"This route is POST only."}
     
@@ -146,12 +147,11 @@ def createUser():
         return {"success": False, "message": "Auth header is missing."}
 
 
-
     reqcon = request.get_json()
 
     print(reqcon)
 
-    if not 'auth' or not 'name' or not 'email' in reqcon:
+    if not 'name' or not 'email' in reqcon:
         return {"success": False, "message":"Missing argument, either name, email or auth."}
     
     token = utils.createRandomString(32)
@@ -159,6 +159,41 @@ def createUser():
     users.addUser(user)
 
     return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
+
+#TODO: As above
+#TODO: Add functionality
+@app.route("/users/delete", methods=['POST'])
+def deleteUser():
+    if request.method != 'POST':
+        return {"success": False, "message":"This route is POST only."}
+    
+    headers = list(request.headers)
+    success = False
+
+    for key, val in headers:
+        if "Authorization" in key:
+            if not val == config["master"]:
+                return {"success": False, "message": "Not authorized."}
+            else:
+                success = True
+    
+    if not success:
+        return {"success": False, "message": "Auth header is missing."}
+
+
+    reqcon = request.get_json()
+
+    print(reqcon)
+
+    if not 'name' or not 'email' in reqcon:
+        return {"success": False, "message":"Missing argument, either name, email or auth."}
+    
+    token = utils.createRandomString(32)
+    user = User(reqcon["name"], reqcon["email"], token)
+    users.addUser(user)
+
+    return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
+
 
 
 if __name__ == "__main__":

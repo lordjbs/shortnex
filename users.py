@@ -19,8 +19,6 @@ class User:
         self.name = _name
         self.email = _email
         self.token = _token
-        self.shortenedLinks = []
-    
     
     def getName(self):
         return self.name
@@ -31,9 +29,6 @@ class User:
     def getToken(self):
         return self.token
     
-    def getShortenedLinks(self):
-        return self.shortenedLinks
-
 class UserSystem:
     def __init__(self, _db):
         self.users = _db.getAllUsers()

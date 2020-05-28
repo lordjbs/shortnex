@@ -38,14 +38,14 @@ class Database:
         self.conn.close()
 
     def checkStart(self):
-        output = self.db.execute("CREATE TABLE IF NOT EXISTS urls (id text, url text, date integer)")
+        self.db.execute("CREATE TABLE IF NOT EXISTS urls (id text, url text, date integer)")
         self.conn.commit()
-        output = self.db.execute("CREATE TABLE IF NOT EXISTS users (name text, email text, token text)")
+        self.db.execute("CREATE TABLE IF NOT EXISTS users (name text, email text, token text)")
 
     def addURL(self, id, url, date):
         try:
             self.db.execute("INSERT INTO urls VALUES (:i, :u, :d)", {'i': id, 'u': url, 'd': date})
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
         self.conn.commit()
 
@@ -80,8 +80,20 @@ class Database:
                 self.db.execute("""INSERT INTO users VALUES (:a, :b, :c)""", {'a': user.getName(), 'b': user.getEmail(), 'c': user.getToken()})
                 self.conn.commit()
                 return True
-            except Exception as e:
+            except Exception:
                 traceback.print_exc()
                 return {"success": False, "message": "Failed the query."}
     
     #TODO: Add remove user
+
+    def removeUser(self, user):
+        if not isinstance(user, User):
+            return {"success": False, "message": "That is not a user object."}
+        else:
+            try:
+                self.db.execute("""DELETE FROM users WHERE token = :a""", {'a': user.getToken()})
+                self.conn.commit()
+                return True
+            except Exception:
+                traceback.print_exc()
+                return {"success": False, "message": "Failed the query."}
