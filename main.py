@@ -28,7 +28,7 @@ print("shortnex " + VERSION + "\nmade by jbs")
 print("shortnex | Loading config")
 with open('config.json') as _config:
     data = json.load(_config)
-config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"], "uEnabled": data["usersystem"]}
+config = {"port": data["port"], "database": data["database"], "url": data["url"], "rEnabled": data["ratelimit"]["enabled"], "uEnabled": data["usersystem"], "master": data["masterToken"]}
 print("shortnex | Done...")
 db = Database(config.get("database"))
 
@@ -71,8 +71,9 @@ print("shortnex | Successfully started! :)")
 def index():
     return render_template("index.html")
 
-
-# curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 46gRGjdWEqqZJ95xKYLYkJMtWsvZkncW" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+# Clean: curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+# PC: curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 7t46eYTBh87WMpC7QndAmsUk3VKtXfgB" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+# Laptop: curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 46gRGjdWEqqZJ95xKYLYkJMtWsvZkncW" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
 @app.route("/shorten", methods=['POST'])
 def shorten():
     if not ratelimits.check(request.remote_addr):
@@ -88,7 +89,6 @@ def shorten():
 
         for key, val in headers:
             if "Authorization" in key:
-                print(val)
                 if not users.checkIfUserExists(val):
                     return {"success": False, "message": "No permissions"}
                 else:
@@ -125,13 +125,28 @@ def goto(id):
     else:
         return redirect(utils.returnProperURL(url))
 
-#TODO: Handle Auth header
-# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"auth":"thetoken", "name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
+#TODO: Handle Auth header 
+# curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"auth":"123456", "name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
 @app.route("/users/create", methods=['POST'])
 def createUser():
     if request.method != 'POST':
         return {"success": False, "message":"This route is POST only."}
     
+    headers = list(request.headers)
+    success = False
+
+    for key, val in headers:
+        if "Authorization" in key:
+            if not val == config["master"]:
+                return {"success": False, "message": "Not authorized."}
+            else:
+                success = True
+    
+    if not success:
+        return {"success": False, "message": "Auth header is missing."}
+
+
+
     reqcon = request.get_json()
 
     print(reqcon)
@@ -144,8 +159,6 @@ def createUser():
     users.addUser(user)
 
     return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
-
-
 
 
 if __name__ == "__main__":

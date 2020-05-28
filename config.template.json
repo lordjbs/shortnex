@@ -2,9 +2,12 @@
   "port": 5000,
   "database": "database.db",
   "url": "http://localhost",
+  "masterToken": "123456",
   "ratelimit": {
     "enabled": true,
     "timeUntilClear": 60,
-    "maxRequests": 30
-  }
+    "maxRequests": 30,
+    "maxMultiplier": 3
+  },
+  "usersystem": true
 }

@@ -21,6 +21,7 @@ class User:
         self.token = _token
         self.shortenedLinks = []
     
+    
     def getName(self):
         return self.name
 
@@ -38,10 +39,14 @@ class UserSystem:
         self.users = _db.getAllUsers()
         self.db = _db
 
+        for user in _db.getAllUsers():
+            print(user.getToken())
+
     def checkIfUserExists(self, token):
         output = False
         for user in self.users:
-            if token is user.getToken():
+            if str(token) == str(user.getToken()):
+                output = user
                 return user
             else:
                 output = False
