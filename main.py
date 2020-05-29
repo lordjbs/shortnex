@@ -123,16 +123,17 @@ def goto(id):
     else:
         return redirect(utils.returnProperURL(url))
 
-#TODO: Handle Auth header 
 # curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 123456" --request POST --data '{"name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
 
-#TODO: Add handlers for if usersys is disabled
 @app.route("/users/create", methods=['POST'])
 def createUser():
 
     if request.method != 'POST':
         return {"success": False, "message":"This route is POST only."}
     
+    if not config["uEnabled"]:
+        return {"success": False, "message": "Disabled."}
+
     headers = list(request.headers)
     success = False
 
@@ -167,6 +168,9 @@ def deleteUser():
     if request.method != 'POST':
         return {"success": False, "message":"This route is POST only."}
     
+        if not config["uEnabled"]:
+            return {"success": False, "message": "Disabled."}
+
     headers = list(request.headers)
     success = False
 
