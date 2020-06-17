@@ -123,6 +123,11 @@ def goto(id):
     else:
         return redirect(utils.returnProperURL(url))
 
+
+@app.route("/<id>/raw")
+def goto_raw(id):
+    url = db.getURL(id)
+    return url
 # curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 123456" --request POST --data '{"name":"user1", "email":"test@test.com"}' http://localhost:5000/users/create
 
 @app.route("/users/create", methods=['POST'])
