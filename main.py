@@ -1,4 +1,4 @@
-# shortnex v2.0
+# shortnex
 # made by jbs (https://github.com/lordjbs/)
 # Copyright (C) 2018-2020 jbs
 #
@@ -22,7 +22,7 @@ import traceback
 from ratelimit import Ratelimit
 from users import User, UserSystem
 
-VERSION = "v2.0"
+VERSION = "v2.1.1"
 print("shortnex " + VERSION + "\nmade by jbs")
 
 print("shortnex | Loading config")
@@ -149,9 +149,6 @@ def createUser():
 
 
     reqcon = request.get_json()
-
-    print(reqcon)
-
     if not 'name' or not 'email' in reqcon:
         return {"success": False, "message":"Missing argument, either name, email or auth."}
     
@@ -185,9 +182,6 @@ def deleteUser():
 
 
     reqcon = request.get_json()
-
-    print(reqcon)
-
     if not 'name' in reqcon:
         return {"success": False, "message":"Missing argument 'name'"}
     

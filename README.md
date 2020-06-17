@@ -1,4 +1,4 @@
-# shortnex v2
+# shortnex v2.1.1
 This is a small and lightweight url shortener, made for everyone. 
 
 ### How to use
