@@ -161,15 +161,14 @@ def createUser():
 
     return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
 
-#TODO: As above
-#TODO: Add functionality
+# curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 123456" --request POST --data '{"name":"user1"}' http://localhost:5000/users/delete
 @app.route("/users/delete", methods=['POST'])
 def deleteUser():
     if request.method != 'POST':
         return {"success": False, "message":"This route is POST only."}
     
-        if not config["uEnabled"]:
-            return {"success": False, "message": "Disabled."}
+    if not config["uEnabled"]:
+        return {"success": False, "message": "Disabled."}
 
     headers = list(request.headers)
     success = False
@@ -189,14 +188,15 @@ def deleteUser():
 
     print(reqcon)
 
-    if not 'name' or not 'email' in reqcon:
-        return {"success": False, "message":"Missing argument, either name, email or auth."}
+    if not 'name' in reqcon:
+        return {"success": False, "message":"Missing argument 'name'"}
     
-    token = utils.createRandomString(32)
-    user = User(reqcon["name"], reqcon["email"], token)
-    users.addUser(user)
+    remove = users.remove_user(reqcon["name"])
 
-    return {"success": True, "message":"Successfully created new user.", "name": reqcon["name"], "email": reqcon["email"], "token": token}
+    if not remove["success"]:
+        return {"success": False, "message": remove["message"]}
+
+    return {"success": True, "message":"Successfully deleted user.", "name": reqcon["name"]}
 
 
 

@@ -47,6 +47,14 @@ class UserSystem:
                 output = False
         
         return output
+    
+    def get_user_by_name(self, name):
+        for user in self.users:
+            if str(name) == str(user.getName()):
+                return user
+        
+        return False
+
 
     def addUser(self, userobj):
         if isinstance(userobj, User):
@@ -55,12 +63,17 @@ class UserSystem:
         else:
             return {"success": False, "message": "Not a users.py:User() object."}
     
-    def removeUser(self, userobj):
-        if isinstance(userobj, User):
-            self.db.addUser(userobj)
+    def remove_user(self, name):
+        try:
+            user = self.get_user_by_name(name)
+            if not user:
+                return {"success": False, "message": "User does not exist."}
+            
+            self.db.removeUser(user)
             self.refresh()
-        else:
-            return {"success": False, "message": "Not a users.py:User() object."}
+            return {"success": True}
+        except Exception:
+            return {"success": False, "message": "Removing failed."}
     
     def refresh(self):
         self.users = self.db.getAllUsers()

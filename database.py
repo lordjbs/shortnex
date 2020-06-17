@@ -84,8 +84,6 @@ class Database:
                 traceback.print_exc()
                 return {"success": False, "message": "Failed the query."}
     
-    #TODO: Add remove user
-
     def removeUser(self, user):
         if not isinstance(user, User):
             return {"success": False, "message": "That is not a user object."}
