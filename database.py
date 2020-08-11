@@ -16,6 +16,7 @@
 
 import sqlite3
 import traceback
+import hashlib
 from users import User
 
 class Database:
@@ -77,7 +78,9 @@ class Database:
             return {"success": False, "message": "That is not a user object."}
         else:
             try:
-                self.db.execute("""INSERT INTO users VALUES (:a, :b, :c)""", {'a': user.getName(), 'b': user.getEmail(), 'c': user.getToken()})
+                token_hash = hashlib.sha512(user.getToken().encode("raw_unicode_escape")) 
+                print(token_hash.hexdigest())
+                self.db.execute("""INSERT INTO users VALUES (:a, :b, :c)""", {'a': user.getName(), 'b': user.getEmail(), 'c': token_hash.hexdigest()})
                 self.conn.commit()
                 return True
             except Exception:

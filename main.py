@@ -19,6 +19,7 @@ from database import Database
 import json
 import time
 import traceback
+import hashlib
 from ratelimit import Ratelimit
 from users import User, UserSystem
 
@@ -72,7 +73,8 @@ def index():
 
 # Clean: curl --header "Content-Type: application/json, charset=utf-8" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
 # PC: curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 7t46eYTBh87WMpC7QndAmsUk3VKtXfgB" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
-# Laptop: curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: 46gRGjdWEqqZJ95xKYLYkJMtWsvZkncW" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+# Laptop: curl --header "Content-Type: application/json, charset=utf-8" --header "Authorization: SvUn74OVBYLr5XHk37NkiVrQIdUuXrQg" --request POST --data '{"url":"https://example.org"}' http://localhost:5000/shorten
+
 @app.route("/shorten", methods=['POST'])
 def shorten():
     if not ratelimits.check(request.remote_addr):
@@ -88,7 +90,8 @@ def shorten():
 
         for key, val in headers:
             if "Authorization" in key:
-                if not users.checkIfUserExists(val):
+                token_hash = hashlib.sha512(val.encode("raw_unicode_escape"))
+                if not users.checkIfUserExists(token_hash.hexdigest()):
                     return {"success": False, "message": "No permissions"}
                 else:
                     authed = True
