@@ -9,5 +9,5 @@
     "maxRequests": 30,
     "maxMultiplier": 3
   },
-  "usersystem": true
+  "usersystem": false
 }
